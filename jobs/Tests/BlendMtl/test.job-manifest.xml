@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<job-manifest name="Smoke">
+
+    <outpath value="{OutputDir}"/>
+
+    <execute command='python "{ResourcesDir}\\VRayRender.py"'>
+        <argument>--tests_list "{Root}\\Tests\\BlendMtl\\test.cases.json"</argument>
+        <argument>--render_path "{Tool}\Render.exe"</argument>
+        <argument>--scene_path "{ScenesDir}\\BlendMtl"</argument>
+        <argument>--output_dir "{OutputDir}"</argument>
+        <argument>--output_img_dir "{OutputDir}\\Color"</argument>
+        <argument>--output_file_ext jpg</argument>
+    </execute>
+
+    <execute command='python "{ResourcesDir}\\rprRender.py"'>
+        <argument>--tests_list "{Root}\\Tests\\BlendMtl\\test.cases.json"</argument>
+        <argument>--render_path "{Tool}\Maya.exe"</argument>
+        <argument>--scene_path "{ScenesDir}\\BlendMtl"</argument>
+        <argument>--output_dir "{OutputDir}"</argument>
+        <argument>--output_img_dir "{OutputDir}/Color"</argument>
+        <argument>--output_file_ext png</argument>
+    </execute>
+
+    <execute command='python "{CWD}/Scripts/make_report_json.py"'>
+        <argument>--work_dir "{OutputDir}"</argument>
+    </execute>
+
+    <execute command='python "{CommonDir}/scripts/ImageComparator/compareByJSON.py"'>
+        <argument>--work_dir "{OutputDir}"</argument>
+        <argument>--base_dir "{BaselineDir}/BlendMtl"</argument>
+        <argument>--case_suffix _VRay.json</argument>
+    </execute>
+
+</job-manifest>

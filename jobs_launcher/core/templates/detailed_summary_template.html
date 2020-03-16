@@ -1,0 +1,172 @@
+{% extends "base_template.html"%}
+
+{% block report_body %}
+
+<h1>details</h1>
+
+{%- if i != "_cur_" %}
+<h3>{{ i }}</h3>
+{% endif -%}
+
+<div class="popup" id="imgsModal">
+    <div class="popupContent" id="imgsModalContent">
+        <form class="popupForm" oninput="currentThresholdView.value=parseFloat(thresholdRange.value)">
+            <button class="commonButton closePopup" type="button" name="closePopupButton" onclick="closeModalWindow('imgsModal');return false;"><img src="report_resources/img/close-button.png"/></button>
+            <button class="commonButton" type="button" name="increaseImgSizeButton" onclick="increaseImgSize();">Image Size +</button>
+            <button class="commonButton" type="button" name="reduceImgSizeButton" onclick="reduceImgSize();">Image Size -</button>
+            <button class="commonButton" type="button" name="showImgsSubstr" onclick="showImagesSubtraction('baselineImgPopup', 'renderedImgPopup');">Switch view mode</button>
+            <input  autocomplete="true" id="thresholdRange" type="range"  name="thresholdSelector" min="0.0" max="1" step="0.01" value="0.03" oninput="renderCanvasData('baselineImgPopup', 'renderedImgPopup', this.value);"/>
+            <output for="thresholdSelector" name="currentThresholdView">0.03</output>
+        </form>
+        <table class="baseTable" id="imgsCompareTable">
+            <thead>
+                <tr>
+                    <th>Baseline Image</th>
+                    <th>Rendered Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="hatching"><img src="" id="baselineImgPopup"/></td>
+                    <td class="hatching"><img src="" id="renderedImgPopup"/></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="baseTable" id="imgsDiffTable" style="display: none">
+            <thead>
+                <tr>
+                    <th>Difference Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="hatching" id="diffImageTd"><canvas id="imgsDifferenceCanvas"></canvas></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="jsTableWrapper">
+    <div id="toolbar">
+        <button class="commonButton" type="button" name="showOnlyPassedCases" onclick="searchTextInBootstrapTable('passed');">Show passed [{{ report[i].summary.passed }}]</button>
+        <button class="commonButton" type="button" name="showOnlyFailedCases" onclick="searchTextInBootstrapTable('failed');">
+            Show failed [{{ report[i].summary.failed }}]
+            <span class="glyphicon glyphicon-question-sign" aria-haspopup="true" aria-hidden="true"data-toggle="tooltip" data-placement="top"
+                  title="Failed status means that pixel difference with baseline image is too large."></span>
+        </button>
+        <button class="commonButton" type="button" name="showOnlyErrorCases" onclick="searchTextInBootstrapTable('error');">
+            Show error [{{ report[i].summary.error }}]
+            <span class="glyphicon glyphicon-question-sign" aria-haspopup="true" aria-hidden="true"data-toggle="tooltip" data-placement="top"
+                  title="Error status means that fatal error has occur during testing."></span>
+        </button>
+        <button class="commonButton" type="button" name="showOnlySkippedCases" onclick="searchTextInBootstrapTable('skipped');">Show skipped [{{ report[i].summary.skipped }}]</button>
+        <button class="commonButton" type="button" name="showAll" onclick="searchTextInBootstrapTable('');">Reset</button>
+    </div>
+
+    <table id="{{ i | lower | replace(' ', '_') | replace('(', '') | replace(')', '') }}"
+           data-toolbar="#toolbar"
+           class="baseTable detailedTable"
+           data-toggle="table"
+           data-search="true"
+           data-show-refresh="true"
+           data-show-toggle="false"
+           data-show-columns="true"
+           data-show-pagination-switch="true"
+           data-pagination="true"
+           data-page-size="10"
+           data-page-list="[1, 5, 10, 20, 45, ALL]"
+           data-sort-order="asc"
+           data-sort-name="test_status"
+           data-show-multi-sort="true"
+    >
+        <thead>
+            <tr>
+                <th data-field="test_case" data-halign="center" data-valign="middle" data-sortable="true" data-visible="false">Test case</th>
+                <th data-field="test_case_copy" data-halign="center" data-valign="middle" data-sortable="true" data-events="copyTestCaseName">
+                    Test case
+                    <span class="glyphicon glyphicon-question-sign" aria-haspopup="true" aria-hidden="true"data-toggle="tooltip" data-placement="top" title="Button click copy direct test case link to clipboard"></span>
+                </th>
+                <th data-field="original_img" data-halign="center" data-valign="middle" data-sortable="true" data-events="openFullImgSize" data-formatter="metaAJAX">{{ original_render | title }}</th>
+                <th data-field="baseline_img" data-halign="center" data-valign="middle" data-sortable="true" data-events="openFullImgSize" data-formatter="metaAJAX">RPR Baseline</th>
+                <th data-field="rendered_img" data-halign="center" data-valign="middle" data-sortable="true" data-events="openFullImgSize" data-formatter="metaAJAX">RPR</th>
+                <th data-field="original_time" data-halign="center" data-valign="middle" data-sortable="true" data-formatter="timeFormatter">{{ original_render | title }} render time</th>
+                <th data-field="baseline_render_time" data-halign="center" data-valign="middle" data-sortable="true" data-formatter="timeFormatter">Baseline render time</th>
+                <th data-field="render_time" data-halign="center" data-valign="middle" data-sortable="true" data-formatter="timeFormatter">RPR render time</th>
+                <th data-field="test_status" data-halign="center" data-valign="middle" data-sortable="true" data-sorter="statusSorter">Test status</th>
+                <th data-field="pix_diff" data-halign="center" data-valign="middle" data-sortable="true">Pixel diff, %</th>
+                <th data-field="time_diff" data-halign="center" data-valign="middle" data-sortable="true">Render time diff, %</th>
+                <th data-filed="render_log" data-visible="true" data-valign="middle" data-halign="center">Log files</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for test_package, value in report[i].results | dictsort %}
+            {% for test_conf, value in report[i].results[test_package] | dictsort%}
+                {% if report[i].results[test_package][test_conf].render_results | length > 0 %}
+
+                {% for item in report[i].results[test_package][test_conf].render_results %}
+            <tr>
+                <td>{{ item.test_case }}</td>
+                <td><button class="commonButton" type="button" name="copyDirectLinkButton">{{ item.test_case }}</button></td>
+                <td class="hatching">
+                {% if item.original_color_path %}
+                    {% if 'thumb64_original_color_path' in item %}
+                    <img data-src="{{ item.thumb64_original_color_path }}"/>
+                    {% else %}
+                    <img data-src="{{ item.original_color_path }}"/>
+                    {% endif %}
+                {% else %}
+                    Not compared
+                {% endif %}
+                </td>
+                <td class="hatching">
+                {% if item.baseline_color_path %}
+                    {% if 'thumb64_baseline_color_path' in item %}
+                    <img data-src="{{ item.thumb64_baseline_color_path }}"/>
+                    {% else %}
+                    <img data-src="{{ item.baseline_color_path }}"/>
+                    {% endif %}
+                {% else %}
+                    Not compared
+                {% endif %}
+                </td>
+                <td class="hatching">
+                    {% if 'thumb64_render_color_path' in item %}
+                    <img data-src="{{ item.thumb64_render_color_path }}"/>
+                    {% else %}
+                    <img data-src="{{ item.render_color_path }}"/>
+                    {% endif %}
+                </td>
+                <td>{{ item.or_render_time }}</td>
+                <td>{{ item.baseline_render_time }}</td>
+                <td>{{ item.render_time }}</td>
+                <td class="{{ item.test_status }}Status">{{ item.test_status | title }}</td>
+                <td class="{{ item.test_status }}Status">{{ item.difference_color }}</td>
+                <!--TODO: 5% to conf CONSTS-->
+                <td {%- if item.difference_time is string %}
+                        >{{ item.difference_time }}
+                    {% elif 5 < item.difference_time %}
+                        class="timeWorseStatus">{{ item.difference_time | round (2) }}
+                    {% elif item.difference_time < -5 %}
+                        class="timeBetterStatus">{{ item.difference_time | round (2) }}
+                    {% else%}
+                        >{{ item.difference_time | round (2) }}
+                    {% endif -%}
+                </td>
+                <td>
+                    <!--TODO: get render path from json-->
+                    <a href="{{ report[i].results[test_package][test_conf].result_path }}/{{ item.original_render_log }}">{{ original_render | title }} log</a><br/>
+                    <a href="{{ report[i].results[test_package][test_conf].result_path }}/{{ item.scene_name }}.conversion.log">Conversion log</a><br/>
+                    <a href="{{ report[i].results[test_package][test_conf].result_path }}/renderTool.log">RPR Log</a>
+                </td>
+            </tr>
+                {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

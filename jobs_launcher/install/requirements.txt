@@ -1,0 +1,13 @@
+psutil
+mkl
+numpy
+scipy
+olefile
+Pillow
+MarkupSafe
+Jinja2
+pytest
+pyscreenshot
+py-cpuinfo
+requests
+imageio

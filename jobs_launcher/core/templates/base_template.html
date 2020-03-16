@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="report_resources/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="report_resources/css/bootstrap-table.css"/>
+    <link rel="stylesheet" type="text/css" href="report_resources/css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="report_resources/css/test-statuses.css"/>
+
+    <script src="report_resources/js/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="report_resources/js/bootstrap.js" type="text/javascript"></script>
+    <script src="report_resources/js/bootstrap-table.js" type="text/javascript"></script>
+    <script src="report_resources/js/scripts.js" type="text/javascript"></script>
+    <script src="report_resources/js/extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
+    <script src="report_resources/js/extensions/toolbar/bootstrap-table-toolbar.js"></script>
+
+    <script src="report_resources/js/pixelmatch.js"></script>
+    <script src="report_resources/js/images-substr.js"></script>
+    <script src="report_resources/js/bootstrap-table-custom.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function init(){
+        {% if pageID is defined %}
+            setActive({{ pageID }});
+        {% endif %}
+        });
+    </script>
+
+    {% if performance_report is defined %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Hadrware'
+          {% for hw in hardware %}
+          , '{{ hw[0] }}'
+          {% endfor %}
+          ]
+
+          {% for tool in performance_report %}
+          ,['{{ tool }}'
+            {% for hw in hardware %}
+            , {{ hw[1] }}
+            {% endfor %}
+            ]
+          {% endfor %}
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Render Time',
+            subtitle: 'The lower is better'
+          },
+          axes: {
+            y: {0: {side: 'left', label: 'Time, s'}},
+            x: {0: {side: 'bottom', label: 'Hardware, grouped by applications'}}
+          },
+          bar: { groupWidth: "80%" }
+
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+    {% endif %}
+
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <a name="#top"/>
+    <a id="goTop" href="#top" title="Go top"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true" aria-label="Go top"></span></a>
+
+    <div id="infoBox"></div>
+
+    <div id="header">
+        <img src="report_resources/img/logo.png"/>
+
+        <ul>
+            <li><a id="summaryA" href='summary_report.html'>summary</a></li>
+            <li><a id="performanceA" href='performance_report.html'>performance</a></li>
+            <li><a id="compareA" href='compare_report.html'>compare</a></li>
+        </ul>
+    </div>
+
+
+    <table class="baseTable">
+        <tr>
+            <th>Testing start</th>
+            <th>Plugin version</th>
+            <th>Core version</th>
+            <th>Branch name</th>
+            <th>Commit SHA</th>
+            <th>Commit message</th>
+        </tr>
+        <tr>
+            <td>{{ common_info.reporting_date | env_override("JOB_STARTED_TIME") }}</td>
+            <td>{{ common_info.render_version }}</td>
+            <td>{{ common_info.core_version }}</td>
+            <td>{{ common_info.branch_name }}</td>
+            <td>{{ common_info.commit_sha }}</td>
+            <td>{{ common_info.commit_message }}</td>
+        </tr>
+    </table>
+
+    <hr>
+
+    {% block report_body %}
+    {% endblock %}
+
+    <hr>
+
+    <div id="footer">
+        Luxoft RPR CIS
+        <br>
+        2017-2019
+        <br>
+        jobs_launcher v{{ "v" | get_jobs_launcher_version() }}
+    </div>
+
+</body>
+</html>
