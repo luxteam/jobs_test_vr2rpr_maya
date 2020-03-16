@@ -66,7 +66,7 @@ def main():
     with open(os.path.join(args.output_dir, 'script.py'), 'w') as file:
         file.write(py_script)
 
-    shutil.copyfile(os.path.join(os.path.dirname(__file__), 'convertRS2RPR.py'), os.path.join(args.output_dir, 'convertRS2RPR.py'))
+    shutil.copyfile(os.path.join(os.path.dirname(__file__), 'convertVR2RPR.py'), os.path.join(args.output_dir, 'convertVR2RPR.py'))
 
     cmd_script = '''
     set MAYA_CMD_FILE_OUTPUT=%cd%/renderTool.log
