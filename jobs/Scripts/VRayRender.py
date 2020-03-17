@@ -65,6 +65,7 @@ def main():
                 scene_file = f.read()
             license = 'fileInfo "license" "student";'
             scene_file = scene_file.replace(license, '')
+            scene_file = scene_file.replace('setAttr ".pmt" 0;', 'setAttr ".pmt" 0.5;')
             with open(scenePath, 'w') as f:
                 f.write(scene_file)
         except:
@@ -81,7 +82,7 @@ def main():
             scenes_without_camera1 = ['Bump', 'BumpBlender', 'Displacement', 'DisplacementBlender', 'Fresnel', 'Normal',
                                       'CarPaint', 'Incandescent', 'SubsurfaceScatter', 'AmbientOcclusion', 'CameraMap',
                                       'Noise', 'ColorLayer']
-            use_camera1 = " -cam camera1"
+            use_camera1 = " -cam Camera001"
             if os.path.basename(args.output_dir) in scenes_without_camera1:
                 use_camera1 = ""
             cmd_script = '"{}" -r vray -proj "{}" -log {} -rd "{}" -im "{}" -of {}{} "{}"' \

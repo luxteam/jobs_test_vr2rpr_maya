@@ -6,6 +6,6 @@
     {"name": "05_IesScene.ma", "status": "active"},
     {"name": "06_Simple_Light.ma", "status": "active"},
     {"name": "07_BigInterior.ma", "status": "active"},
-    {"name": "08_Naturmort.ma", "status": "active"},
+    {"name": "08_Naturmort.ma", "status": "skipped"},
     {"name": "09_Skullnatur.ma", "status": "active"}
 ]
