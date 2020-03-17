@@ -1,3 +1,12 @@
 [
-{"name": "1.ma", "status": "active"}
+    {"name": "01_MaterialTest.ma", "status": "active"},
+    {"name": "02_MLTScene.ma", "status": "active"},
+    {"name": "03_Bump.ma", "status": "active"},
+    {"name": "04_Robot.ma", "status": "active"},
+    {"name": "05_MaterialTest.ma", "status": "active"},
+    {"name": "06_MaterialTest.ma", "status": "active"},
+    {"name": "07_MaterialTest.ma", "status": "active"},
+    {"name": "08_MaterialTest.ma", "status": "active"},
+    {"name": "09_MaterialTest.ma", "status": "active"},
+    {"name": "10_MaterialTest.ma", "status": "active"}
 ]

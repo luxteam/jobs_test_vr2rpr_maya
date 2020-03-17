@@ -75,7 +75,6 @@ def prerender(scene, rpr_iter):
 
 
 def main():
-
 	mel.eval("setProject(\"{res_path}\")")
 	tests = {tests}
 	for each in tests:

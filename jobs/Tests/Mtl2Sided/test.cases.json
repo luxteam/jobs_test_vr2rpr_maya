@@ -1,3 +1,9 @@
 [
-{"name": "1.ma", "status": "active"}
+    {"name": "Mtl2Sided1.ma", "status": "active"},
+    {"name": "Mtl2Sided2.ma", "status": "active"},
+    {"name": "Mtl2Sided3.ma", "status": "active"},
+    {"name": "Mtl2Sided4.ma", "status": "active"},
+    {"name": "Mtl2Sided5.ma", "status": "active"},
+    {"name": "Mtl2Sided6.ma", "status": "active"},
+    {"name": "Mtl2Sided7.ma", "status": "active"}
 ]

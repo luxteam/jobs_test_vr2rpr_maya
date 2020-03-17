@@ -51,6 +51,25 @@ def main():
         return 1
 
     for test in tests_list:
+        scene = test['name']
+        try:
+            scenePath = os.path.join(args.scene_path)
+            try:
+                temp = os.path.join(scenePath, scene[:-3])
+                if os.path.isdir(temp):
+                    scenePath = temp
+            except:
+                pass
+            scenePath = os.path.join(scenePath, scene)
+            with open(scenePath) as f:
+                scene_file = f.read()
+            license = 'fileInfo "license" "student";'
+            scene_file = scene_file.replace(license, '')
+            with open(scenePath, 'w') as f:
+                f.write(scene_file)
+        except:
+            pass
+
         if test['status'] == 'active':
             case_report = RENDER_REPORT_BASE
             case_report.update({

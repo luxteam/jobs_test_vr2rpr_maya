@@ -1,3 +1,12 @@
 [
-{"name": "1.ma", "status": "active"}
+    {"name": "Textures1.ma", "status": "active"},
+    {"name": "Textures2.ma", "status": "active"},
+    {"name": "Textures3.ma", "status": "active"},
+    {"name": "Textures4.ma", "status": "active"},
+    {"name": "Textures5.ma", "status": "active"},
+    {"name": "Textures6.ma", "status": "active"},
+    {"name": "Textures7.ma", "status": "active"},
+    {"name": "Textures8.ma", "status": "active"},
+    {"name": "Textures9.ma", "status": "active"},
+    {"name": "Textures10.ma", "status": "active"}
 ]

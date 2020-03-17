@@ -1,3 +1,19 @@
 [
-{"name": "1.ma", "status": "active"}
+    {"name": "Camera1.ma", "status": "active"},
+    {"name": "Camera2.ma", "status": "active"},
+    {"name": "Camera3.ma", "status": "active"},
+    {"name": "Camera4.ma", "status": "active"},
+    {"name": "Camera5.ma", "status": "active"},
+    {"name": "Camera6.ma", "status": "active"},
+    {"name": "Camera7.ma", "status": "active"},
+    {"name": "Camera8.ma", "status": "active"},
+    {"name": "Camera9.ma", "status": "active"},
+    {"name": "Camera10.ma", "status": "active"},
+    {"name": "Camera11.ma", "status": "active"},
+    {"name": "Camera12.ma", "status": "active"},
+    {"name": "Camera13.ma", "status": "active"},
+    {"name": "Camera14.ma", "status": "active"},
+    {"name": "Camera15.ma", "status": "active"},
+    {"name": "Camera16.ma", "status": "active"},
+    {"name": "Camera17.ma", "status": "active"}
 ]
