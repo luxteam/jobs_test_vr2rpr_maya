@@ -25,7 +25,7 @@ def createArgsParser():
 def get_or_render_time(log_name):
     with open(log_name, 'r') as file:
         for line in file.readlines():
-            if "[Redshift] Rendering done - total time for 1 frames:" in line:
+            if "[Vray] Rendering done - total time for 1 frames:" in line:
                 time_s = line.split(": ")[-1]
 
                 try:
@@ -84,11 +84,11 @@ def main():
             use_camera1 = " -cam camera1"
             if os.path.basename(args.output_dir) in scenes_without_camera1:
                 use_camera1 = ""
-            cmd_script = '"{}" -r redshift -proj "{}" -log {} -rd "{}" -im "{}" -of {}{} "{}"' \
+            cmd_script = '"{}" -r vray -proj "{}" -log {} -rd "{}" -im "{}" -of {}{} "{}"' \
                 .format(args.render_path, args.scene_path, render_log_path, args.output_img_dir,
                         os.path.join(args.output_img_dir, test['name']), args.output_file_ext, use_camera1,
                         os.path.join(args.scene_path, test['name']))
-            cmd_script_path = os.path.join(args.output_dir, test['name'] + '.renderRedshift.bat')
+            cmd_script_path = os.path.join(args.output_dir, test['name'] + '.vray.bat')
 
             try:
                 with open(cmd_script_path, 'w') as file:
@@ -114,7 +114,7 @@ def main():
                 # return rc
                 if rc == 0:
                     case_report['render_time'] = get_or_render_time(case_report['original_render_log'])
-                    with open(os.path.join(args.output_dir, test['name'] + '_RS.json'), 'w') as file:
+                    with open(os.path.join(args.output_dir, test['name'] + '_Vray.json'), 'w') as file:
                         json.dump([case_report], file, indent=4)
     return 0
 

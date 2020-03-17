@@ -13,7 +13,7 @@ files = os.listdir(directory)
 json_files = list(filter(lambda x: x.endswith('RPR.json'), files))
 # build report.json if was launched render_or.bat
 if not json_files:
-    json_files = list(filter(lambda x: x.endswith('RS.json'), files))
+    json_files = list(filter(lambda x: x.endswith('Vray.json'), files))
 result_json = ""
 
 for file in range(len(json_files)):
