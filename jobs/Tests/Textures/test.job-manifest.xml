@@ -28,7 +28,6 @@
     <execute command='python "{CommonDir}/scripts/ImageComparator/compareByJSON.py"'>
         <argument>--work_dir "{OutputDir}"</argument>
         <argument>--base_dir "{BaselineDir}/Textures"</argument>
-        <argument>--case_suffix _VRay.json</argument>
     </execute>
 
 </job-manifest>
