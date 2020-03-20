@@ -79,4 +79,4 @@ def main():
 	tests = {tests}
 	for each in tests:
 		prerender(each, 300)
-	cmds.evalDeferred(cmds.quit(abort=True))
+	cmds.evalDeferred("cmds.quit(abort=True)")
