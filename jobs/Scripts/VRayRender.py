@@ -75,7 +75,17 @@ def main():
             case_report = RENDER_REPORT_BASE
             case_report.update({
                 "original_color_path": "Color/" + test['name'] + '.' + args.output_file_ext,
-                "original_render_log": test['name'] + '.or.log'
+                "original_render_log": test['name'] + '.or.log',
+                "render_mode": "gpu",
+                "file_name": test['name'] + '.' + args.output_file_ext,
+                "tool": "Vray",
+                "core_version": "Null",
+                "test_group": test['name'].split('.')[0],
+                "render_device": "GeForce GTX 1080 Ti",
+                "test_case": test['name'],
+                "render_version": "None",
+                "scene_name": test['name'],
+                "date_time": datetime.datetime.now()
             })
             render_log_path = os.path.join(args.output_dir, test['name'] + '.or.log')
 
