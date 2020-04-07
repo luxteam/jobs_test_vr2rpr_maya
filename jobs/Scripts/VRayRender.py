@@ -86,7 +86,8 @@ def main():
                 "test_case": test['name'].split('.')[0],
                 "render_version": "None",
                 "scene_name": test['name'],
-                "date_time": "04/07/2020 00:00:00"
+                "date_time": "04/07/2020 00:00:00",
+                "render_time": -0.0
             })
             render_log_path = os.path.join(args.output_dir, test['name'] + '.or.log')
 
