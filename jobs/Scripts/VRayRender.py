@@ -71,6 +71,7 @@ def main():
         except:
             pass
 
+        # TODO: fill with real data
         if test['status'] == 'active':
             case_report = RENDER_REPORT_BASE
             case_report.update({
@@ -82,7 +83,7 @@ def main():
                 "core_version": "Null",
                 "test_group": test['name'].split('.')[0],
                 "render_device": "GeForce GTX 1080 Ti",
-                "test_case": test['name'],
+                "test_case": test['name'].split('.')[0],
                 "render_version": "None",
                 "scene_name": test['name'],
                 "date_time": "04/07/2020 00:00:00"
