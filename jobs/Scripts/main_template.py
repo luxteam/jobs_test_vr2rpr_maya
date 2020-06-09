@@ -65,10 +65,10 @@ def prerender(scene, rpr_iter):
 	report['scene_name'] = scene
 	report['render_time'] = render_time
 	report['test_case'] = scene
-	report['difference_color'] = "not compared yet"
+	report['difference_color'] = -0
 	report['test_status'] = "passed"
-	report['difference_time'] = "not compared yet"
-	report['difference_time_or'] = "not compared yet"
+	report['difference_time'] = -0
+	report['difference_time_or'] = -0
 
 	with open(filePath, 'w') as file:
 		json.dump([report], file, indent=4)
