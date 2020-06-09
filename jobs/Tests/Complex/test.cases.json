@@ -1,11 +1,11 @@
 [
-    {"name": "01_MaterialTest.ma", "status": "active"},
-    {"name": "02_MLTScene.ma", "status": "active"},
-    {"name": "03_Bump.ma", "status": "active"},
-    {"name": "04_Robot.ma", "status": "active"},
+    {"name": "01_MaterialTest.ma", "status": "skipped"},
+    {"name": "02_MLTScene.ma", "status": "skipped"},
+    {"name": "03_Bump.ma", "status": "skipped"},
+    {"name": "04_Robot.ma", "status": "skipped"},
     {"name": "05_IesScene.ma", "status": "active"},
     {"name": "06_Simple_Light.ma", "status": "active"},
     {"name": "07_BigInterior.ma", "status": "active"},
     {"name": "08_Naturmort.ma", "status": "active"},
-    {"name": "09_Skullnatur.ma", "status": "active"}
+    {"name": "09_Skullnatur.ma", "status": "skipped"}
 ]
